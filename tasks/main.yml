@@ -1,13 +1,24 @@
 ---
-- name: Blacklist nouveau kernel module
+- name: Blacklist kernel modules
   kernel_blacklist:
-    name: nouveau
+    name: "{{ item.name }}"
     state: present
+    blacklist_file: "{{ kernel_blacklist_file }}"
+  with_items: "{{ kernel_modules }}"
+  when: item.blacklist|default(true)
+
+- name: Unload kernel modules
+  modprobe:
+    name: "{{ item.name }}"
+    state: absent
+    params: "{{ item.params|default('') }}"
+  with_items: "{{ kernel_modules }}"
+
+# Don't load blacklisted modules
+- name: Load kernel modules
+  modprobe:
+    name: "{{ item.name }}"
+    state: present
+    params: "{{ item.params|default('') }}"
   with_items: "{{ kernel_modules }}"
   when: item.blacklist|default(false)
-
-- name: Load dummy kernel module
-  modprobe:
-    name: dummy
-    state: present
-    params: 'numdummies=2'

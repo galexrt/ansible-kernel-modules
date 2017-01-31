@@ -13,7 +13,11 @@ Role Variables
 
 ```
 kernel_modules:
-  - name: nf_conntrack
+  - name: dummy
+  - name: dummy
+    params: 'numdummies=2'
+  - name: dummy
+    blacklist: yes
 ```
 
 Dependencies

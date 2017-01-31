@@ -1,8 +1,5 @@
 ---
 # defaults file for galexrt.kernel-modules
-kernel_modules:
-  - name: dummy
-  - name: dummy
-    params: 'numdummies=2'
-  - name: dummy
-    blacklist: yes
+kernel_blacklist_file: "/etc/modprobe.d/blacklist-ansible.conf"
+
+kernel_modules: []
