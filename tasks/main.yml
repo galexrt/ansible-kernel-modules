@@ -1,1 +1,13 @@
 ---
+- name: Blacklist nouveau kernel module
+  kernel_blacklist:
+    name: nouveau
+    state: present
+  with_items: "{{ kernel_modules }}"
+  when: item.blacklist|default(false)
+
+- name: Load dummy kernel module
+  modprobe:
+    name: dummy
+    state: present
+    params: 'numdummies=2'
