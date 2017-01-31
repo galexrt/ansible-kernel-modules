@@ -1,5 +1,10 @@
 ---
 # defaults file for galexrt.kernel-modules
-kernel_blacklist_file: "/etc/modprobe.d/blacklist-ansible.conf"
+kernel_use_systemd_modules_load: true
+
+kernel_modules_conf_dir: "/etc/modules-load.d"
+
+kernel_load_file: "load-ansible.conf"
+kernel_blacklist_file: "blacklist-ansible.conf"
 
 kernel_modules: []

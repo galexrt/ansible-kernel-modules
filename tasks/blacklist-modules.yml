@@ -1,0 +1,8 @@
+---
+- name: Blacklist kernel modules
+  kernel_blacklist:
+    name: "{{ item.name }}"
+    state: present
+    blacklist_file: "{{ kernel_blacklist_file }}"
+  with_items: "{{ kernel_modules }}"
+  when: item.blacklist|default(true)

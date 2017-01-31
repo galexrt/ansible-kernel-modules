@@ -1,24 +1,30 @@
 ---
-- name: Blacklist kernel modules
-  kernel_blacklist:
-    name: "{{ item.name }}"
-    state: present
-    blacklist_file: "{{ kernel_blacklist_file }}"
-  with_items: "{{ kernel_modules }}"
-  when: item.blacklist|default(true)
+- name: Check if loading kernel modules is possible
+  command: "modprobe dummy"
+  register: modprobe_test
+  ignore_errors: yes
 
-- name: Unload kernel modules
-  modprobe:
-    name: "{{ item.name }}"
-    state: absent
-    params: "{{ item.params|default('') }}"
-  with_items: "{{ kernel_modules }}"
+- name: Fail when kernel module loading isn't possible
+  fail:
+    msg: "Kernel module loading isn't possible"
+  when: modprobe_test.rc != 0
 
-# Don't load blacklisted modules
-- name: Load kernel modules
-  modprobe:
-    name: "{{ item.name }}"
-    state: present
-    params: "{{ item.params|default('') }}"
-  with_items: "{{ kernel_modules }}"
-  when: item.blacklist|default(false)
+- name: Unload test kernel module
+  command: "rmmod dummy"
+
+- name: Check if systemd-modules-load can be used
+  stat:
+    path: "/etc/modules-load.d/"
+  register: s
+
+- name: Use modprobe.d for non-systemd servers
+  set_fact:
+    kernel_use_systemd_modules_load: false
+    kernel_modules_conf_dir: "/etc/modprobe.d"
+  when: not s.stat.exists
+
+- include: blacklist-modules.yml
+
+- include: unload-modules.yml
+
+- include: load-modules.yml

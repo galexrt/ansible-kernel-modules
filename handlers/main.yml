@@ -1,2 +1,7 @@
 ---
-# handlers file for galexrt.kernel-modules
+# handlers file for ansible-kernel-modules
+- name: restart systemd-modules-load
+  service:
+    name: systemd-modules-load
+    enabled: yes
+    state: restarted

@@ -1,0 +1,8 @@
+---
+- name: Unload kernel modules
+  modprobe:
+    name: "{{ item.name }}"
+    state: absent
+    params: "{{ item.params|default('') }}"
+  with_items: "{{ kernel_modules }}"
+  when: item.unload|default(false)

@@ -1,0 +1,22 @@
+---
+# Don't load blacklisted modules
+- name: Load kernel modules
+  modprobe:
+    name: "{{ item.name }}"
+    state: present
+    params: "{{ item.params|default('') }}"
+  with_items: "{{ kernel_modules }}"
+  when: item.blacklist|default(false)
+
+- name: Add kernel modules to autoload file
+  lineinfile:
+    create: yes
+    dest: "{{ kernel_modules_conf_dir }}/{{ kernel_load_file }}"
+    line: "{{ item.name }}"
+    state: present
+    owner: root
+    group: root
+  when: item.autoload|default(true)
+  with_items: "{{ kernel_modules }}"
+  notify:
+    - restart systemd-modules-load

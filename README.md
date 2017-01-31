@@ -14,9 +14,11 @@ Role Variables
 ```
 kernel_modules:
   - name: dummy
+    autoload: false
   - name: dummy
     params: 'numdummies=2'
   - name: dummy
+    unload: yes
     blacklist: yes
 ```
 
