@@ -35,7 +35,7 @@ An example playbook on how to use this role:
 ```
 - hosts: servers
   roles:
-     - { role: galexrt.kernel-modules, x: 42 }
+    - { role: galexrt.kernel-modules, x: 42 }
 ```
 
 License
