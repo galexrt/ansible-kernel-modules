@@ -16,6 +16,7 @@
     state: present
     owner: root
     group: root
+    mode: 0644
   when: item.autoload|default(true)
   with_items: "{{ kernel_modules }}"
   notify:
