@@ -13,10 +13,15 @@ Role Variables
 
 ```
 kernel_modules:
+# Module dummy will be added to autoload and loaded immediately
+  - name: dummy
+# This module will be loadedn but not autoloaded
   - name: dummy
     autoload: false
+# Module will be loaded with params
   - name: dummy
     params: 'numdummies=2'
+# Module will be unloaded and blacklisted
   - name: dummy
     unload: yes
     blacklist: yes
