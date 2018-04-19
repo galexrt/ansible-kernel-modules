@@ -6,7 +6,7 @@
     state: present
     params: "{{ item.params|default('') }}"
   with_items: "{{ kernel_modules }}"
-  when: item.blacklist|default(false)
+  when: not item.blacklist|default(false)
 
 - name: Add kernel modules to autoload file
   lineinfile:
