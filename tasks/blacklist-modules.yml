@@ -5,4 +5,4 @@
     state: present
     blacklist_file: "{{ kernel_blacklist_file }}"
   with_items: "{{ kernel_modules }}"
-  when: item.blacklist|default(true)
+  when: item.blacklist|default(false)
