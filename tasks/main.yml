@@ -3,14 +3,17 @@
   command: "modprobe dummy"
   register: modprobe_test
   ignore_errors: yes
+  changed_when: false
 
 - name: Fail when kernel module loading isn't possible
   fail:
     msg: "Kernel module loading isn't possible"
   when: modprobe_test.rc != 0
+  changed_when: false
 
 - name: Unload test kernel module
   command: "rmmod dummy"
+  changed_when: false
 
 - name: Check if systemd-modules-load can be used
   stat:
