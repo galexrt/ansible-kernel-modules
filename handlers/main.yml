@@ -3,5 +3,5 @@
 - name: restart systemd-modules-load
   service:
     name: systemd-modules-load
-    enabled: yes
+    enabled: true
     state: restarted

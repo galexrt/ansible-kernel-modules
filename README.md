@@ -23,8 +23,8 @@ kernel_modules:
     params: 'numdummies=2'
 # Module will be unloaded and blacklisted
   - name: dummy
-    unload: yes
-    blacklist: yes
+    unload: true
+    blacklist: true
 ```
 
 Dependencies

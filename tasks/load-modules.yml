@@ -10,7 +10,7 @@
 
 - name: Add kernel modules to autoload file
   lineinfile:
-    create: yes
+    create: true
     dest: "{{ kernel_modules_conf_dir }}/{{ kernel_load_file }}"
     line: "{{ item.name }}"
     state: present

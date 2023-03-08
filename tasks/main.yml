@@ -1,8 +1,8 @@
 ---
 - name: Check if loading kernel modules is possible
-  command: "modprobe dummy"
+  ansible.builtin.command: "modprobe dummy"
   register: modprobe_test
-  ignore_errors: yes
+  ignore_errors: true
   changed_when: false
 
 - name: Fail when kernel module loading isn't possible
@@ -12,7 +12,7 @@
   changed_when: false
 
 - name: Unload test kernel module
-  command: "rmmod dummy"
+  ansible.builtin.command: "rmmod dummy"
   changed_when: false
 
 - name: Check if systemd-modules-load can be used
