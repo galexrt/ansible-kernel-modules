@@ -26,8 +26,8 @@
     kernel_modules_conf_dir: "/etc/modprobe.d"
   when: not s.stat.exists
 
-- include: blacklist-modules.yml
+- include_tasks: blacklist-modules.yml
 
-- include: unload-modules.yml
+- include_tasks: unload-modules.yml
 
-- include: load-modules.yml
+- include_tasks: load-modules.yml
