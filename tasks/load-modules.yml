@@ -9,7 +9,7 @@
   when: not item.blacklist|default(false)
 
 - name: Add kernel modules to autoload file
-  lineinfile:
+  ansible.builtin.lineinfile:
     create: true
     dest: "{{ kernel_modules_conf_dir }}/{{ kernel_load_file }}"
     line: "{{ item.name }}"

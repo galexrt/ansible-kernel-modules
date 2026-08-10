@@ -6,7 +6,7 @@
   changed_when: false
 
 - name: Fail when kernel module loading isn't possible
-  fail:
+  ansible.builtin.fail:
     msg: "Kernel module loading isn't possible"
   when: modprobe_test.rc != 0
   changed_when: false
@@ -16,18 +16,21 @@
   changed_when: false
 
 - name: Check if systemd-modules-load can be used
-  stat:
+  ansible.builtin.stat:
     path: "/etc/modules-load.d/"
   register: s
 
 - name: Use modprobe.d for non-systemd servers
-  set_fact:
+  ansible.builtin.set_fact:
     kernel_use_systemd_modules_load: false
     kernel_modules_conf_dir: "/etc/modprobe.d"
   when: not s.stat.exists
 
-- include_tasks: blacklist-modules.yml
+- ansible.builtin.include_tasks:
+    file: blacklist-modules.yml
 
-- include_tasks: unload-modules.yml
+- ansible.builtin.include_tasks:
+    file: unload-modules.yml
 
-- include_tasks: load-modules.yml
+- ansible.builtin.include_tasks:
+    file: load-modules.yml
